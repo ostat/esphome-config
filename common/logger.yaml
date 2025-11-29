@@ -1,0 +1,5 @@
+# Common logger configuration
+# Include this in your device configs with: <<: !include common/logger.yaml
+
+logger:
+  level: INFO

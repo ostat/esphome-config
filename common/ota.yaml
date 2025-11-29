@@ -1,0 +1,6 @@
+# Common OTA (Over-The-Air) update configuration
+# Include this in your device configs with: <<: !include common/ota.yaml
+
+ota:
+  - platform: esphome
+    password: !secret ota_password

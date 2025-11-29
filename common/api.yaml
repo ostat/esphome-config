@@ -1,0 +1,6 @@
+# Common API configuration (for Home Assistant)
+# Include this in your device configs with: <<: !include common/api.yaml
+
+api:
+  encryption:
+    key: !secret api_encryption_key

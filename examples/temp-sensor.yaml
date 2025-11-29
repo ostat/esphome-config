@@ -1,0 +1,46 @@
+# Example ESP32 device with temperature sensor
+# This demonstrates a temperature monitoring device
+
+substitutions:
+  device_name: example-temp-sensor
+  friendly_name: "Example Temperature Sensor"
+
+esphome:
+  name: ${device_name}
+
+esp32:
+  board: esp32dev
+
+# Import common configurations
+<<: !include ../common/wifi.yaml
+<<: !include ../common/logger.yaml
+<<: !include ../common/api.yaml
+<<: !include ../common/ota.yaml
+
+# DHT22 temperature and humidity sensor
+sensor:
+  - platform: dht
+    pin: GPIO4
+    temperature:
+      name: "${friendly_name} Temperature"
+      filters:
+        - sliding_window_moving_average:
+            window_size: 10
+            send_every: 10
+    humidity:
+      name: "${friendly_name} Humidity"
+      filters:
+        - sliding_window_moving_average:
+            window_size: 10
+            send_every: 10
+    update_interval: 60s
+    model: DHT22
+
+  # WiFi Signal strength
+  - platform: wifi_signal
+    name: "${friendly_name} WiFi Signal"
+    update_interval: 60s
+
+  # Uptime sensor
+  - platform: uptime
+    name: "${friendly_name} Uptime"
